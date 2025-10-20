@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS CUSTOMER CASCADE;
+CREATE TABLE CUSTOMER (
+    user_id INT NOT NULL,
+    user_name VARCHAR(50) NOT NULL,
+    user_address VARCHAR(100),
+    user_phone_number VARCHAR(10));

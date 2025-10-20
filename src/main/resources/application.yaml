@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: userserv
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  output:
+    ansi:
+      enabled: ALWAYS
