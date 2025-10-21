@@ -1,9 +1,13 @@
 package com.kimlngo.userserv.service;
 
+import com.kimlngo.userserv.assembler.CustomerModelAssembler;
 import com.kimlngo.userserv.entity.Customer;
+import com.kimlngo.userserv.exception.CustomerNotFoundException;
 import com.kimlngo.userserv.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,20 +15,26 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    @Autowired
     private CustomerRepository customerRepository;
+    private CustomerModelAssembler customerModelAssembler;
 
-    public CustomerService(CustomerRepository userRepository) {
+    @Autowired
+    public CustomerService(CustomerRepository userRepository, CustomerModelAssembler customerModelAssembler) {
         this.customerRepository = userRepository;
+        this.customerModelAssembler = customerModelAssembler;
     }
 
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
+    public List<EntityModel<Customer>> getAllCustomers() {
+        return customerRepository.findAll()
+                                 .stream()
+                                 .map(customerModelAssembler::toModel)
+                                 .toList();
     }
 
-    public Customer getCustomerById(Long id) {
+    public EntityModel<Customer> getCustomerById(Long id) {
         return customerRepository.findById(id)
-                                 .orElse(null);
+                                 .map(customerModelAssembler::toModel)
+                                 .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
     public Customer createNewCustomer(Customer customer) {
