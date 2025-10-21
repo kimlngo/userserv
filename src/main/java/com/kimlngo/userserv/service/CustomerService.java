@@ -2,7 +2,6 @@ package com.kimlngo.userserv.service;
 
 import com.kimlngo.userserv.entity.Customer;
 import com.kimlngo.userserv.repository.CustomerRepository;
-import com.kimlngo.userserv.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +18,13 @@ public class CustomerService {
         this.customerRepository = userRepository;
     }
 
-    public List<Customer> getAllUsers() {
+    public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
+    }
+
+    public Customer getCustomerById(Long id) {
+        return customerRepository.findById(id)
+                                 .orElse(null);
     }
 
     public Customer createNewCustomer(Customer customer) {

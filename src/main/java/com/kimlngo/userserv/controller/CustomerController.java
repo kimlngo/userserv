@@ -22,8 +22,19 @@ public class CustomerController {
 
     @GetMapping("/customer")
     public ResponseEntity<List<Customer>> getAllCustomers() {
-        List<Customer> allUsers = customerService.getAllUsers();
+        List<Customer> allUsers = customerService.getAllCustomers();
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
+    }
+
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+        Customer customer = customerService.getCustomerById(id);
+
+        if (customer != null)
+            return new ResponseEntity<>(customer, HttpStatus.OK);
+        else
+            return ResponseEntity.notFound()
+                                 .build();
     }
 
     @PostMapping("/customer")
@@ -35,7 +46,12 @@ public class CustomerController {
     @PutMapping("/customer/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
         Customer updatedCustomer = customerService.updateCustomer(customer, id);
-        return new ResponseEntity<>(updatedCustomer, updatedCustomer != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+
+        if(updatedCustomer != null)
+            return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
+        else
+            return ResponseEntity.notFound()
+                                 .build();
     }
 
     @DeleteMapping("/customer/{id}")
