@@ -1,0 +1,22 @@
+services:
+  postgres-db:
+    container_name: "postgres-db"
+    image: "postgres:17.0"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./env/postgres.env
+#  user-serv:
+#    container_name: "user-serv"
+#    build:
+#      context: /
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres-db
+
+volumes:
+  postgres-data:

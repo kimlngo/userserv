@@ -2,6 +2,7 @@ package com.kimlngo.userserv.advice;
 
 import com.kimlngo.userserv.exception.CustomerNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,7 +14,7 @@ public class CustomerNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(CustomerNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String customerNotFoundHandler(CustomerNotFoundException e) {
-        return e.getMessage();
+    public RecordNotFound customerNotFoundHandler(CustomerNotFoundException e) {
+        return new RecordNotFound(e.getMessage());
     }
 }
