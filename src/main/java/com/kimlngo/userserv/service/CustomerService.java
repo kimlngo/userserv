@@ -7,7 +7,6 @@ import com.kimlngo.userserv.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +14,8 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    private CustomerRepository customerRepository;
-    private CustomerModelAssembler customerModelAssembler;
+    private final CustomerRepository customerRepository;
+    private final CustomerModelAssembler customerModelAssembler;
 
     @Autowired
     public CustomerService(CustomerRepository userRepository, CustomerModelAssembler customerModelAssembler) {
